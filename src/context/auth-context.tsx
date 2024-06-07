@@ -17,7 +17,7 @@ export default function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [user, setUser] = useState<User | undefined>({
-    id: "user#1",
+    id: "user1",
     name: "Paul-Henry",
   });
 

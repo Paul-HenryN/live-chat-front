@@ -1,7 +1,11 @@
 "use client";
 import SidebarHeader from "./sidebar-header";
 import SidebarButton from "./sidebar-button";
-import { useChatContext } from "@/hooks/useChatContext";
+import { cn } from "@/lib/utils";
+import { ResizablePanel } from "../ui/resizable";
+import React from "react";
+import { conversations } from "../../../dummy";
+import { useActiveConversationId } from "@/hooks/useActiveConversationId";
 
 export type User = {
   id: string;
@@ -9,6 +13,7 @@ export type User = {
 };
 
 export type Message = {
+  id: string;
   sender: User;
   receiver: User;
   content: string;
@@ -20,34 +25,53 @@ export type Conversation = {
   messages: Message[];
 };
 
-interface SidebarProps {
-  isCollapsed: boolean;
-}
+interface SidebarProps
+  extends Pick<
+    React.ComponentProps<typeof ResizablePanel>,
+    "defaultSize" | "collapsedSize"
+  > {}
 
-export function Sidebar({ isCollapsed }: SidebarProps) {
-  const { conversations, activeConversationIndex, setActiveConversationIndex } =
-    useChatContext();
+export function Sidebar({ defaultSize, collapsedSize }: SidebarProps) {
+  const [isCollapsed, setCollapsed] = React.useState(false);
+  const activeConversationId = useActiveConversationId();
 
   return (
-    <div
-      data-collapsed={isCollapsed}
-      className="relative group flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 "
-    >
-      {!isCollapsed && (
-        <SidebarHeader conversationsCount={conversations.length} />
+    <ResizablePanel
+      defaultSize={defaultSize}
+      collapsedSize={collapsedSize}
+      collapsible={true}
+      minSize={24}
+      maxSize={30}
+      onCollapse={() => {
+        setCollapsed(true);
+      }}
+      onExpand={() => {
+        setCollapsed(false);
+      }}
+      className={cn(
+        isCollapsed &&
+          "min-w-[50px] md:min-w-[70px] transition-all duration-300 ease-in-out"
       )}
-
-      <div className="grid gap-5 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
-        {conversations.map((conversation, index) => (
-          <SidebarButton
-            key={index}
-            active={activeConversationIndex === index}
-            collapsed={isCollapsed}
-            conversation={conversation}
-            OnMouseDown={() => setActiveConversationIndex(index)}
-          />
-        ))}
+    >
+      <div
+        data-collapsed={isCollapsed}
+        className="relative group flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 "
+      >
+        {!isCollapsed && (
+          <SidebarHeader conversationsCount={conversations.length} />
+        )}
+        <div className="grid gap-5 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+          {conversations.map((conversation, index) => (
+            <SidebarButton
+              key={index}
+              active={conversation.id === activeConversationId}
+              collapsed={isCollapsed}
+              conversation={conversation}
+              href={`/conversations?id=${conversation.id}`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </ResizablePanel>
   );
 }

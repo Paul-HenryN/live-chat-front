@@ -15,7 +15,6 @@ import { Textarea } from "../ui/textarea";
 import { EmojiPicker } from "../emoji-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Message } from "../sidebar/sidebar";
-import { useChatContext } from "@/hooks/useChatContext";
 import { useAuth } from "@/hooks/useAuth";
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Paperclip }];
@@ -25,13 +24,9 @@ export default function ChatBottombar({
 }: {
   onSendMessage: (newMessage: Message) => void;
 }) {
-  const { conversations, activeConversationIndex } = useChatContext();
   const { user: currentUser } = useAuth();
-  const interlocutor = conversations[activeConversationIndex].users.find(
-    (user) => user.id === currentUser!.id
-  );
-  const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [message, setMessage] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
@@ -48,9 +43,14 @@ export default function ChatBottombar({
   const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
+
       handleSend({
+        id: "newmes",
         sender: currentUser!,
-        receiver: interlocutor!,
+        receiver: {
+          id: "user#3",
+          name: "Paul-Henry",
+        },
         content: message,
       });
     }
@@ -185,8 +185,12 @@ export default function ChatBottombar({
             )}
             onClick={() =>
               handleSend({
+                id: "newmes",
                 sender: currentUser!,
-                receiver: interlocutor!,
+                receiver: {
+                  id: "user#3",
+                  name: "Test",
+                },
                 content: message,
               })
             }
