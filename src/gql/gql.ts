@@ -17,6 +17,8 @@ const documents = {
     "\n  mutation Login($authInput: AuthInput!) {\n    login(authInput: $authInput) {\n      user {\n        id\n        username\n        creationDate\n      }\n      access_token\n    }\n  }\n": types.LoginDocument,
     "\n  query GetConversations {\n    getConversations {\n      id\n      users {\n        id\n        username\n        creationDate\n      }\n      messages {\n        id\n        content\n        conversationId\n        creationDate\n        sender {\n          id\n          username\n          creationDate\n        }\n        receiver {\n          id\n          username\n          creationDate\n        }\n      }\n    }\n  }\n": types.GetConversationsDocument,
     "\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n": types.AddConversationDocument,
+    "\n  query GetMessages($getMessagesInput: GetMessagesInput!) {\n    getMessages(getMessagesInput: $getMessagesInput) {\n      id\n      content\n      sender {\n        id\n      }\n      receiver {\n        id\n      }\n    }\n  }\n": types.GetMessagesDocument,
+    "\n  mutation AddMessage($newMessageData: NewMessageInput!) {\n    addMessage(newMessageData: $newMessageData)\n  }\n": types.AddMessageDocument,
     "\n  query GetUsers {\n    getUsers {\n      id\n      username\n      creationDate\n    }\n  }\n": types.GetUsersDocument,
 };
 
@@ -50,6 +52,14 @@ export function graphql(source: "\n  query GetConversations {\n    getConversati
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetMessages($getMessagesInput: GetMessagesInput!) {\n    getMessages(getMessagesInput: $getMessagesInput) {\n      id\n      content\n      sender {\n        id\n      }\n      receiver {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetMessages($getMessagesInput: GetMessagesInput!) {\n    getMessages(getMessagesInput: $getMessagesInput) {\n      id\n      content\n      sender {\n        id\n      }\n      receiver {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddMessage($newMessageData: NewMessageInput!) {\n    addMessage(newMessageData: $newMessageData)\n  }\n"): (typeof documents)["\n  mutation AddMessage($newMessageData: NewMessageInput!) {\n    addMessage(newMessageData: $newMessageData)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 import { Conversation } from "@/gql/graphql";
 import { useInterlocutor } from "@/hooks/useInterlocutor";
@@ -38,10 +38,9 @@ export default function SidebarButton({
             >
               <Link href={href}>
                 <Avatar>
-                  <AvatarImage
-                    src="https://i.pravatar.cc/300"
-                    alt={interlocutor?.username}
-                  />
+                  <AvatarFallback>
+                    {interlocutor?.username.charAt(0).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
               </Link>
             </Button>
@@ -62,10 +61,9 @@ export default function SidebarButton({
     >
       <Link href={href}>
         <Avatar>
-          <AvatarImage
-            src="https://i.pravatar.cc/300"
-            alt={interlocutor?.username}
-          />
+          <AvatarFallback>
+            {interlocutor?.username.charAt(0).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
 
         <p>{interlocutor?.username}</p>
