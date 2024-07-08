@@ -19,10 +19,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { graphql } from "@/gql";
+import { ApolloError } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useRegister } from "@/hooks/useRegister";
+import { useLogin } from "@/hooks/useLogin";
 
 const FormSchema = z
   .object({
@@ -30,7 +30,9 @@ const FormSchema = z
     password: z
       .string()
       .min(6, { message: "Your password must have at least 6 caracters" }),
-    passwordConfirmation: z.string(),
+    passwordConfirmation: z
+      .string()
+      .min(6, { message: "Your password must have at least 6 caracters" }),
   })
   .refine(
     ({ password, passwordConfirmation }) => password === passwordConfirmation,
@@ -38,17 +40,11 @@ const FormSchema = z
       message: "The password confirmation doesn't match",
       path: ["passwordConfirmation"],
     }
-  );
-
-const ADD_USER = graphql(/* GraphQL */ `
-  mutation AddUser($newUserData: NewUserInput!) {
-    addUser(newUserData: $newUserData) {
-      id
-      username
-      creationDate
-    }
-  }
-`);
+  )
+  .refine(({ username }) => username.match(/^[a-zA-Z0-9]+$/), {
+    message: "Your username can only contain letters and numbers",
+    path: ["username"],
+  });
 
 export default function SignupPage() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -61,16 +57,18 @@ export default function SignupPage() {
   });
   const router = useRouter();
 
-  const [addUser, { loading }] = useMutation(ADD_USER);
+  const { register, loading } = useRegister();
 
-  const onSubmit = ({ username, password }: z.infer<typeof FormSchema>) => {
-    console.log(username);
-    addUser({
-      variables: { newUserData: { username, password } },
-      onCompleted: () => {
-        router.push("/login");
-      },
-    });
+  const onSubmit = async ({
+    username,
+    password,
+  }: z.infer<typeof FormSchema>) => {
+    try {
+      await register(username, password);
+      router.push("/login");
+    } catch (error) {
+      form.setError("root", { message: (error as ApolloError).message });
+    }
   };
 
   return (

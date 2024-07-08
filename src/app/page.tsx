@@ -1,3 +1,13 @@
+"use client";
+import { useAuth } from "@/hooks/useAuth";
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return <p>hello</p>;
+  const { user } = useAuth();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  redirect("/conversations");
 }

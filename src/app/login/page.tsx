@@ -13,22 +13,16 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { graphql } from "@/gql";
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { LOGIN_MUTATION } from "@/services/auth";
+import { useLogin } from "@/hooks/useLogin";
 
 const FormSchema = z.object({
   username: z.string().min(1, "Required"),
   password: z.string().min(1, "Required"),
 });
-
-const LOGIN = graphql(/* GraphQL */ `
-  mutation login($authInput: AuthInput!) {
-    login(authInput: $authInput) {
-      access_token
-    }
-  }
-`);
 
 export default function LoginPage() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -41,24 +35,18 @@ export default function LoginPage() {
   const { setUser } = useAuth();
   const router = useRouter();
 
-  const [login, { loading }] = useMutation(LOGIN);
+  const { login, loading } = useLogin();
 
-  const onSubmit = ({ username, password }: z.infer<typeof FormSchema>) => {
-    login({
-      variables: { authInput: { password, username } },
-      onCompleted: () => {
-        setUser({
-          id: "test",
-          username,
-          creationDate: Date.now().toLocaleString(),
-        });
-
-        router.push("/conversations");
-      },
-      onError: (error) => {
-        form.setError("root", { message: error.message });
-      },
-    });
+  const onSubmit = async ({
+    username,
+    password,
+  }: z.infer<typeof FormSchema>) => {
+    try {
+      await login(username, password);
+      router.push("/");
+    } catch (error) {
+      form.setError("root", { message: (error as ApolloError).message });
+    }
   };
 
   return (

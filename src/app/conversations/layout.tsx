@@ -4,9 +4,9 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { conversations } from "../../../dummy";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import Link from "next/link";
+import { LogoutButton } from "@/components/logout-button";
 
 interface ChatLayoutProps
   extends Omit<React.ComponentProps<typeof ResizablePanelGroup>, "direction"> {}
@@ -18,9 +18,13 @@ export default function ChatLayout({
 }: ChatLayoutProps) {
   return (
     <main className="grid grid-rows-[1fr_5fr] place-items-center min-h-screen pb-5">
-      <h1 className="text-3xl font-bold text-gradient">
-        <Link href="#">Live Chat</Link>
-      </h1>
+      <div className="flex items-center justify-between w-full px-[5%]">
+        <h1 className="text-3xl font-bold text-gradient">
+          <Link href="#">Live Chat</Link>
+        </h1>
+
+        <LogoutButton />
+      </div>
 
       <ResizablePanelGroup
         direction="horizontal"

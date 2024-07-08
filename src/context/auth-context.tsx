@@ -19,7 +19,9 @@ export default function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User | undefined>(
+    JSON.parse(localStorage.getItem("user")!) || undefined
+  );
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
   return (
