@@ -4,10 +4,10 @@
 
 Groupe 9
 
-    - Thierry Pavone TCHOUAMOU PAYONG
-    - Paul-Henry NGANKAM NGOUNOU
-    - Maxime Loïc NKWEMI NJIKI
-    - Oumou Khairy GUEYE
+- Thierry Pavone TCHOUAMOU PAYONG
+- Paul-Henry NGANKAM NGOUNOU
+- Maxime Loïc NKWEMI NJIKI
+- Oumou Khairy GUEYE
 
 ## Description
 
@@ -17,30 +17,30 @@ Live-Chat est une application de messagerie instantanée avec une interface util
 
 Assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-    - Node.js (v14 ou supérieur)
-    - npm ou Yarn
+- Node.js (v14 ou supérieur)
+- npm ou Yarn
 
 ## Installation
 
 Clonez le dépôt :
 
-    ```bash
-       git clone https://github.com/Paul-HenryN/live-chat-front.git
-       cd live-chat-front
-    ```
+```bash
+    git clone https://github.com/Paul-HenryN/live-chat-front.git
+    cd live-chat-front
+```
 
 Installez les dépendances :
 
-    ```bash
-       npm install
-    ```
+```bash
+    npm install
+```
 
 ## Utilisation
 
 Démarrez le serveur de développement :
 
-    ```bash
-       npm run dev
-    ```
+```bash
+    npm run dev
+```
 
 Le serveur devrait maintenant être en cours d'exécution sur http://localhost:3000.
