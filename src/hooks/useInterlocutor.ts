@@ -1,4 +1,4 @@
-import { Conversation } from "@/components/sidebar/sidebar";
+import { Conversation } from "@/gql/graphql";
 import { useAuth } from "./useAuth";
 
 export function useInterlocutor(conversation: Conversation) {

@@ -15,6 +15,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation AddUser($newUserData: NewUserInput!) {\n    addUser(newUserData: $newUserData) {\n      id\n      username\n      creationDate\n    }\n  }\n": types.AddUserDocument,
     "\n  mutation Login($authInput: AuthInput!) {\n    login(authInput: $authInput) {\n      user {\n        id\n        username\n        creationDate\n      }\n      access_token\n    }\n  }\n": types.LoginDocument,
+    "\n  query GetConversations {\n    getConversations {\n      id\n      users {\n        id\n        username\n        creationDate\n      }\n      messages {\n        id\n        content\n        conversationId\n        creationDate\n        sender {\n          id\n          username\n          creationDate\n        }\n        receiver {\n          id\n          username\n          creationDate\n        }\n      }\n    }\n  }\n": types.GetConversationsDocument,
+    "\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n": types.AddConversationDocument,
+    "\n  query GetUsers {\n    getUsers {\n      id\n      username\n      creationDate\n    }\n  }\n": types.GetUsersDocument,
 };
 
 /**
@@ -39,6 +42,18 @@ export function graphql(source: "\n  mutation AddUser($newUserData: NewUserInput
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation Login($authInput: AuthInput!) {\n    login(authInput: $authInput) {\n      user {\n        id\n        username\n        creationDate\n      }\n      access_token\n    }\n  }\n"): (typeof documents)["\n  mutation Login($authInput: AuthInput!) {\n    login(authInput: $authInput) {\n      user {\n        id\n        username\n        creationDate\n      }\n      access_token\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetConversations {\n    getConversations {\n      id\n      users {\n        id\n        username\n        creationDate\n      }\n      messages {\n        id\n        content\n        conversationId\n        creationDate\n        sender {\n          id\n          username\n          creationDate\n        }\n        receiver {\n          id\n          username\n          creationDate\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetConversations {\n    getConversations {\n      id\n      users {\n        id\n        username\n        creationDate\n      }\n      messages {\n        id\n        content\n        conversationId\n        creationDate\n        sender {\n          id\n          username\n          creationDate\n        }\n        receiver {\n          id\n          username\n          creationDate\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation AddConversation($newConversationData: NewConversationInput!) {\n    addConversation(newConversationData: $newConversationData) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetUsers {\n    getUsers {\n      id\n      username\n      creationDate\n    }\n  }\n"): (typeof documents)["\n  query GetUsers {\n    getUsers {\n      id\n      username\n      creationDate\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

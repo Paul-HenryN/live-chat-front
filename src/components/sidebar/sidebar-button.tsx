@@ -7,8 +7,9 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { Conversation } from "./sidebar";
 import Link from "next/link";
+import { Conversation } from "@/gql/graphql";
+import { useInterlocutor } from "@/hooks/useInterlocutor";
 
 interface SidebarButtonProps {
   collapsed: boolean;
@@ -23,7 +24,7 @@ export default function SidebarButton({
   conversation,
   href,
 }: SidebarButtonProps) {
-  const interlocutor = conversation.users[1];
+  const interlocutor = useInterlocutor(conversation);
 
   if (collapsed) {
     return (
@@ -39,14 +40,14 @@ export default function SidebarButton({
                 <Avatar>
                   <AvatarImage
                     src="https://i.pravatar.cc/300"
-                    alt={interlocutor.name}
+                    alt={interlocutor?.username}
                   />
                 </Avatar>
               </Link>
             </Button>
           </TooltipTrigger>
           <TooltipContent side="right" className="flex items-center gap-4">
-            {interlocutor.name}
+            {interlocutor?.username}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -63,11 +64,11 @@ export default function SidebarButton({
         <Avatar>
           <AvatarImage
             src="https://i.pravatar.cc/300"
-            alt={interlocutor.name}
+            alt={interlocutor?.username}
           />
         </Avatar>
 
-        <p>{interlocutor.name}</p>
+        <p>{interlocutor?.username}</p>
       </Link>
     </Button>
   );
