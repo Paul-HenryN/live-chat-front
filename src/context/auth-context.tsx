@@ -1,14 +1,17 @@
 "use client";
-import { User } from "@/components/sidebar/sidebar";
+import { User } from "@/gql/graphql";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
 type AuthContextType = {
   user?: User;
   setUser: Dispatch<SetStateAction<User | undefined>>;
+  accessToken?: string;
+  setAccessToken: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
   setUser: () => {},
+  setAccessToken: () => {},
 });
 
 export default function AuthContextProvider({
@@ -16,13 +19,13 @@ export default function AuthContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | undefined>({
-    id: "user1",
-    name: "Paul-Henry",
-  });
+  const [user, setUser] = useState<User | undefined>();
+  const [accessToken, setAccessToken] = useState<string | undefined>();
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider
+      value={{ user, setUser, accessToken, setAccessToken }}
+    >
       {children}
     </AuthContext.Provider>
   );
