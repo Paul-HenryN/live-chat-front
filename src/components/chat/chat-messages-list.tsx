@@ -1,20 +1,31 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import ChatBottombar from "./chat-bottombar";
 import { AnimatePresence, motion } from "framer-motion";
 import { Message } from "../sidebar/sidebar";
 import { useActiveConversationId } from "@/hooks/useActiveConversationId";
-import { conversations } from "../../../dummy";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_MESSAGE_MUTATION, GET_MESSAGES_QUERY } from "@/services/messages";
+import { io } from "socket.io-client";
 
 export function ChatMessagesList() {
   const activeConversationId = useActiveConversationId();
   const { user: currentUser } = useAuth();
-  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL!);
+
+    socket.on("connect", () => {
+      console.log("socket.id");
+    });
+
+    socket.on(activeConversationId!, (message) => {
+      console.log("message", message);
+    });
+  }, []);
 
   const { data, error, loading } = useQuery(GET_MESSAGES_QUERY, {
     variables: {
