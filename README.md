@@ -1,74 +1,46 @@
-[<img src="shadcn-preview.png">](https://live-chat.vercel.app/)
+# Live-Chat Backend
 
-<h1 align="center">live-chat</h1>
-<div align="center">
+## Collaborateurs
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/jakobhoeg/live-chat)](https://github.com/jakobhoeg/live-chat/stargazers)
+Groupe 9
 
-</div>
+    - Thierry Pavone TCHOUAMOU PAYONG
+    - Paul-Henry NGANKAM NGOUNOU
+    - Maxime Loïc NKWEMI NJIKI
+    - Oumou Khairy GUEYE
 
-<p align="center">Customizable and re-usable chat component for you to use in your projects. Built on top of shadcn.</p>
+## Description
 
-<div align="center">
+Live-Chat est une application de messagerie instantanée avec une interface utilisateur construite en utilisant React. L'application interagit avec un backend GraphQL et utilise WebSocket pour la communication en temps réel. Ce projet vise à fournir une expérience de messagerie fluide et réactive.
 
-[Demo](https://live-chat.vercel.app/) • [Preview](#Preview) • [Usage](#Usage) • [Installation](#Installation) • [Tech stack](#Tech-stack) • [Example Project](https://github.com/jakobhoeg/nextjs-ollama-llm-ui)
+## Prérequis
 
-</div>
+Assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-# Preview
+    - Node.js (v14 ou supérieur)
+    - npm ou Yarn
 
-https://github.com/jakobhoeg/live-chat/assets/114422072/a934f80f-1662-46f2-83bc-bdca45982ce6
+## Installation
 
-# Usage
+Clonez le dépôt :
 
-You can use the source code and copy paste components into your NextJS project.
+    ```bash
+       git clone https://github.com/Paul-HenryN/live-chat-front.git
+       cd live-chat-front
+    ```
 
-These components in particular:
+Installez les dépendances :
 
-```
-/src/app/components/chat/chat-layout.tsx, chat.tsx, chat-topbar.tsx, chat-list.tsx & chat-bottombar.tsx
-```
+    ```bash
+       npm install
+    ```
 
-# Installation
+## Utilisation
 
-If you'd like to spin up a local environment similar to the [demo](https://live-chat.vercel.app/), follow these instructions:
+Démarrez le serveur de développement :
 
-**1. Clone the repository to a directory on your pc via command prompt:**
+    ```bash
+       npm run dev
+    ```
 
-```
-git clone https://github.com/jakobhoeg/live-chat
-```
-
-**2. Open the folder:**
-
-```
-cd live-chat
-```
-
-**3. Install dependencies:**
-
-```
-npm install
-```
-
-**4. Start the development server:**
-
-```
-npm run dev
-```
-
-**5. Go to [localhost](http://localhost:3000) and start playing around!**
-
-# Tech stack
-
-[NextJS](https://nextjs.org/) - React Framework for the Web
-
-[TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
-
-[shadcn-ui](https://ui.shadcn.com/) - UI component built using Radix UI and Tailwind CSS
-
-[Emoji Mart](https://github.com/missive/emoji-mart) - Customizable emoji picker for the web
-
-[Framer Motion](https://www.framer.com/motion/) - Motion/animation library for React
-
-[Lucide Icons](https://lucide.dev/) - Icon library
+Le serveur devrait maintenant être en cours d'exécution sur http://localhost:3000.
